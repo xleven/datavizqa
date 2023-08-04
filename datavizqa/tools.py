@@ -31,6 +31,10 @@ class PythonPlotTool(PythonAstREPLTool):
     def _run(self, query: str, run_manager: CallbackManagerForToolRun | None = None) -> str:
         _, output_image = tempfile.mkstemp(suffix=".png", dir=self.outdir)
         self.locals.update({"output_image": output_image})
+        if "import matplotlib.pyplot as plt" not in query:
+            query = "import matplotlib.pyplot as plt\n" + query
+        if "plt.show()" not in query:
+            query = query + "\nplt.show()"
         query = query.replace("plt.show()", "plt.savefig(output_image)")
         try:
             super()._run(query, run_manager)
