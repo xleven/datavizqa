@@ -20,7 +20,7 @@ class PythonPlotTool(PythonAstREPLTool):
         "Don't add comments to your python code."
     )
     outdir: Optional[str] = "./datavizqa/static/"
-    args_schema: Type[PythonPlotToolInput] = PythonPlotToolInput
+    # args_schema: Type[PythonPlotToolInput] = PythonPlotToolInput
     
     @validator("outdir")
     def outdir_validator(cls, v):
