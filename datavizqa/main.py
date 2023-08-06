@@ -139,6 +139,8 @@ if "chain" in ss:
         ss.messages.append({"role": "user", "content": question})
         st.chat_message("user").write(question)
         with st.chat_message("assistant"):
-            answer = ss.chain.invoke({"question": question})
-            st.write(answer)        
+            answer, container = "", st.empty()
+            for token in ss.chain.stream({"question": question}):
+                answer += token.content
+                container.write(answer)
         ss.messages.append({"role": "assistant", "content": answer})
