@@ -139,8 +139,6 @@ if "chain" in ss:
         ss.messages.append({"role": "user", "content": question})
         st.chat_message("user").write(question)
         with st.chat_message("assistant"):
-            handler = StreamlitCallbackHandler(st.container(), expand_new_thoughts=ss.cot)
-            answer = ss.chain.invoke({"question": question}, config={"callbacks": [handler]})
-
-            ss.messages.append({"role": "assistant", "content": answer})
-            st.write(answer)
+            answer = ss.chain.invoke({"question": question})
+            st.write(answer)        
+        ss.messages.append({"role": "assistant", "content": answer})
