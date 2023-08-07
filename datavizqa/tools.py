@@ -1,7 +1,7 @@
 import tempfile
 from typing import Optional, Type
 from langchain.callbacks.manager import CallbackManagerForToolRun
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 from langchain.tools import PythonAstREPLTool
 
 
@@ -19,14 +19,8 @@ class PythonPlotTool(PythonAstREPLTool):
         "Make sure it does not look abbreviated before using it in your answer. "
         "Don't add comments to your python code."
     )
-    outdir: Optional[str] = "./datavizqa/static/"
+    outdir: Optional[str] = "./datavizqa/static"
     args_schema: Type[PythonPlotToolInput] = PythonPlotToolInput
-    
-    @validator("outdir")
-    def outdir_validator(cls, v):
-        if not v.endswith("/"):
-            v = v + "/"
-        return v
 
     def _run(self, query: str, run_manager: CallbackManagerForToolRun | None = None) -> str:
         _, output_image = tempfile.mkstemp(suffix=".png", dir=self.outdir)
@@ -36,9 +30,8 @@ class PythonPlotTool(PythonAstREPLTool):
         if "plt.show()" not in query:
             query = query + "\nplt.show()"
         query = query.replace("plt.show()", "plt.savefig(output_image)")
-        try:
-            super()._run(query, run_manager)
-        except Exception as err:
-            print(err)
+        
+        super()._run(query, run_manager)
+        
         output_image_path = "app/static/" + output_image.split("/")[-1]
-        return output_image_path
+        return f"Chart saved at: {output_image_path}"
