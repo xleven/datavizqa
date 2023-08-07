@@ -4,6 +4,9 @@
 .idea/*
 .DS_Store
 secrets.toml
+*.ipynb
+sample
+static
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
