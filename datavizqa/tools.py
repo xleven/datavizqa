@@ -34,4 +34,4 @@ class PythonPlotTool(PythonAstREPLTool):
         super()._run(query, run_manager)
         
         output_image_path = "app/static/" + output_image.split("/")[-1]
-        return f"Chart saved at: {output_image_path}"
+        return f"{output_image_path}"

@@ -50,6 +50,14 @@ RE_MARKDOWN_IMAGE = r"!\[(.*?)\]\((.*?)\)"
 
 st.set_page_config(page_title="DataVizQA", page_icon="🤖")
 st.title("QA on your data with visualizations")
+custom_css = """
+<style>
+    p > img {
+        width: 100%
+    }
+</style>
+"""
+st.markdown(custom_css, unsafe_allow_html=True)
 
 ss = st.session_state
 
