@@ -43,7 +43,7 @@ def get_agent(df, openai_api_key, number_of_head_rows=5, outdir="./datavizqa/sta
     agent_exe = AgentExecutor.from_agent_and_tools(agent, tools)
     return agent_exe
 
-langchain.debug = True
+langchain.debug = os.getenv("LANGCHAIN_DEBUG")
 
 RE_MARKDOWN_IMAGE = r"!\[(.*?)\]\((.*?)\)"
 
